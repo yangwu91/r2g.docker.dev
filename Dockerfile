@@ -110,7 +110,7 @@ RUN \
     #======================
     # creating base directory for svfb
     #======================
-    mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
+    mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 USER 1000
 RUN \
