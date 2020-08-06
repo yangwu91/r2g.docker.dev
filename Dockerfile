@@ -73,7 +73,7 @@ RUN \
     # get all scripts ready
     #======================================
     mkdir -p /opt/bin && \
-    cp -f /tmp/scripts/start-*.sh /opt/bin/ && \
+    cp -f /tmp/scripts/* /opt/bin/ && \
     chmod +x /opt/bin/* && \
 
     #======================================
@@ -118,7 +118,7 @@ RUN \
     # r2g
     #======================
     # pip install r2g && \
-    bash /tmp/scripts/generate_r2g_pathjson.sh > ${HOME}/.path.json && \
+    bash /opt/bin/generate_r2g_pathjson.sh > ${HOME}/.path.json && \
     git clone https://github.com/yangwu91/r2g.alpha.git && \
     cd r2g.alpha && \
     pip install -yq .[test] && \
