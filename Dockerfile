@@ -18,7 +18,7 @@ ENV PATH="/opt/miniconda3/bin:/opt/bin:$PATH"
 #ENV LANG=${LANGUAGE}
 #ENV TZ="America/New_York"
 
-WORKDIR /opt
+
 
 EXPOSE 4444
 
@@ -110,7 +110,14 @@ RUN \
     #======================
     # creating base directory for svfb
     #======================
-    mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+    mkdir -p /tmp/.X11-unix && \
+    chmod 1777 /tmp/.X11-unix && \
+
+    #======================
+    # creating output dir
+    #======================
+    mkdir -p /output && \
+    chown -R r2guser /output
 
 USER 1000
 RUN \
@@ -119,10 +126,11 @@ RUN \
     #======================
     # pip install r2g && \
     bash /opt/bin/generate_r2g_pathjson.sh > ${HOME}/.path.json && \
+    cd /opt && \
     git clone https://github.com/yangwu91/r2g.alpha.git && \
     cd r2g.alpha && \
     pip install .[test] && \
-    cd ../
+    cd /output
 
 #============================
 # Some configuration options
@@ -160,5 +168,7 @@ ENV GRID_DEBUG false
 
 # Following line fixes https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+
+WORKDIR /output
 
 ENTRYPOINT ["/opt/bin/start-docker-entrypoint.sh"]
