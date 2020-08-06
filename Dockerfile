@@ -121,7 +121,7 @@ RUN \
     bash /opt/bin/generate_r2g_pathjson.sh > ${HOME}/.path.json && \
     git clone https://github.com/yangwu91/r2g.alpha.git && \
     cd r2g.alpha && \
-    pip install -yq .[test] && \
+    pip install .[test] && \
     cd ../
 
 #============================
