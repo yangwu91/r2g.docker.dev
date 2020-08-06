@@ -86,15 +86,6 @@ RUN \
     chmod +x /opt/bin/chromedriver && \
     bash /tmp/scripts/generate_webdriver_config.sh > /opt/selenium/config.json && \
 
-    #=================
-    # clean
-    #=================
-    apt autoremove -yy && \
-    apt autoclean -yy && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
-
-USER 1000
-RUN \
     #=====================
     # miniconda3
     #=====================
@@ -105,13 +96,24 @@ RUN \
     conda config --add channels bioconda && \
     conda config --add channels conda-forge && \
     # Trinity, sratoolkit and other dependencies:
-    conda install -y python=$PY_VER trinity=$TRINITY_VER sra-tools=$SRA_VER numpy requests selenium && \
+    conda install -y python=$PY_VER trinity=$TRINITY_VER sra-tools=$SRA_VER numpy && \
+    chown -R r2guser /opt/miniconda && \
+
+    #=================
+    # clean
+    #=================
+    apt autoremove -yy && \
+    apt autoclean -yy && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/* && \
+    conda clean -ayq && \
 
     #======================
     # creating base directory for svfb
     #======================
-    sudo mkdir -p /tmp/.X11-unix && sudo chmod 1777 /tmp/.X11-unix && \
+    mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
 
+USER 1000
+RUN \
     #======================
     # r2g
     #======================
@@ -120,14 +122,7 @@ RUN \
     git clone https://github.com/yangwu91/r2g.alpha.git && \
     cd r2g.alpha && \
     pip install -yq .[test] && \
-    cd ../ && \
-
-    #======================
-    # clean
-    #======================
-    sudo rm -rf /tmp/* && \
-    conda clean -ayq
-
+    cd ../
 
 #============================
 # Some configuration options
