@@ -97,7 +97,7 @@ RUN \
     conda config --add channels conda-forge && \
     # Trinity, sratoolkit and other dependencies:
     conda install -y python=$PY_VER trinity=$TRINITY_VER sra-tools=$SRA_VER numpy && \
-    chown -R r2guser /opt/miniconda && \
+    chown -R r2guser /opt/* && \
 
     #=================
     # clean
