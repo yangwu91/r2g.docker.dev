@@ -114,11 +114,11 @@ RUN \
     chmod 1777 /tmp/.X11-unix && \
 
     #======================
-    # creating output dir
+    # creating a worksapce
     #======================
-    mkdir -p /output && \
-    chown -R r2guser /output && \
-    chmod 777 /output
+    mkdir -p /workspace && \
+    chown -R r2guser /workspace && \
+    chmod 777 /workspace
 
 USER 1000
 RUN \
@@ -131,7 +131,7 @@ RUN \
     git clone https://github.com/yangwu91/r2g.alpha.git && \
     cd r2g.alpha && \
     pip install .[test] && \
-    cd /output
+    cd /workspace
 
 USER root
 
@@ -172,7 +172,6 @@ ENV GRID_DEBUG false
 # Following line fixes https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
-WORKDIR /output
+WORKDIR /workspace
 
-#ENTRYPOINT ["/opt/bin/start-docker-entrypoint.sh"]
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/opt/bin/start-docker-entrypoint.sh"]

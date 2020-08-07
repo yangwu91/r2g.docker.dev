@@ -34,6 +34,6 @@ echo "##########################################################################
 #trap shutdown SIGTERM SIGINT
 #wait ${SUPERVISOR_PID}
 
-gosu r2guser /bin/bash "$@"
+gosu r2guser /bin/bash
 
 #exec /usr/local/bin/gosu r2guser /opt/miniconda3/bin/r2g "$@"
