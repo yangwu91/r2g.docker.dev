@@ -117,7 +117,8 @@ RUN \
     # creating output dir
     #======================
     mkdir -p /output && \
-    chown -R r2guser /output
+    chown -R r2guser /output && \
+    chmod 777 /output
 
 USER 1000
 RUN \
@@ -171,4 +172,5 @@ ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
 WORKDIR /output
 
-ENTRYPOINT ["/opt/bin/start-docker-entrypoint.sh"]
+#ENTRYPOINT ["/opt/bin/start-docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash"]
