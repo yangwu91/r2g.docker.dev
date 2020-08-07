@@ -5,17 +5,24 @@
 # https://docs.openshift.com/container-platform/3.11/creating_images/guidelines.html#openshift-specific-guidelines
 #==============================================
 
-if ! whoami &> /dev/null; then
-  if [ -w /etc/passwd ]; then
-    echo "${USER_NAME:-default}:x:$(id -u):0:${USER_NAME:-default} user:${HOME}:/sbin/nologin" >> /etc/passwd
-  fi
-fi
+#if ! whoami &> /dev/null; then
+#  if [ -w /etc/passwd ]; then
+#    echo "${USER_NAME:-default}:x:$(id -u):0:${USER_NAME:-default} user:${HOME}:/sbin/nologin" >> /etc/passwd
+#  fi
+#fi
 
-nohup /usr/bin/supervisord --configuration /etc/supervisord.conf > /var/log/supervisor/supervisord.$(date +%m%d%Y-%H%M%S).log 2>&1 &
+echo "UID: $(id -u "$(whoami)")"
+echo "GID: $(id -g "$(whoami)")"
+
+usermod -u $UID r2guser
+groupmod -g "$(id -g "$(whoami)")" r2guser
+
+nohup /usr/bin/supervisord --configuration /etc/supervisord.conf > /var/log/supervisor/supervisord."$(date +%m%d%Y-%H%M%S)".log 2>&1 &
 
 SUPERVISOR_PID=$!
 
 echo "Supervising xvfb and selenium-standalone.jar running in background. PID: ${SUPERVISOR_PID}."
+echo "###########################################################################"
 
 #function shutdown {
 #    echo "Trapped SIGTERM/SIGINT/x so shutting down supervisord..."
@@ -27,4 +34,6 @@ echo "Supervising xvfb and selenium-standalone.jar running in background. PID: $
 #trap shutdown SIGTERM SIGINT
 #wait ${SUPERVISOR_PID}
 
-/opt/miniconda3/bin/r2g "$@"
+gosu r2guser /bin/bash "$@"
+
+#exec /usr/local/bin/gosu r2guser /opt/miniconda3/bin/r2g "$@"
