@@ -27,7 +27,7 @@ echo "##########################################################################
 
 #trap shutdown SIGTERM SIGINT
 #wait ${SUPERVISOR_PID}
-printf '/LIBS/GUID = "%s"\n' `uuidgen` > ${HOME}/.ncbi/user-settings.mkfg
+#printf '/LIBS/GUID = "%s"\n' `uuidgen` > ${HOME}/.ncbi/user-settings.mkfg
 
 #/opt/miniconda3/bin/r2g "$@"
 /bin/bash

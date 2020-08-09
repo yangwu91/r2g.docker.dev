@@ -30,7 +30,7 @@ RUN \
     #============================================
     #cp -f /tmp/configs/bfsu.sources.list /etc/apt/sources.list && \
     apt update -qqy && \
-    apt install -qqy wget gnupg2 zip tzdata xvfb pulseaudio language-pack-en locales supervisor sudo git gosu && \
+    apt install -qqy wget gnupg2 zip tzdata xvfb pulseaudio language-pack-en locales supervisor sudo git gosu uuid-runtime && \
     wget -qO - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
 	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
 	# echo "deb [arch=amd64] https://onedrive.drwu.ga/?/google-chrome-mirror/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
@@ -96,6 +96,17 @@ RUN \
     # Trinity, sratoolkit and other dependencies:
     conda install -y python=$PY_VER trinity=$TRINITY_VER sra-tools=$SRA_VER numpy && \
     chown -R r2guser /opt/* && \
+
+	#=====================
+    # configure sra-tools>2.10
+    #=====================
+	mkdir /opt/ncbi && \
+	chmod 777 /opt/ncbi && \
+	mkdir -p /.ncbi && \
+	chmod 777 /.ncbi && \
+	mkdir -p /root/.ncbi && \
+    bash /opt/bin/generate_sratools_config.sh > /.ncbi/user-settings.mkfg && \
+    bash /opt/bin/generate_sratools_config.sh > /root/.ncbi/user-settings.mkfg && \
 
     #=================
     # clean
