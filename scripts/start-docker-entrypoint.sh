@@ -11,12 +11,6 @@
 #  fi
 #fi
 
-echo "UID: $(id -u "$(whoami)")"
-echo "GID: $(id -g "$(whoami)")"
-
-usermod -u $UID r2guser
-groupmod -g "$(id -g "$(whoami)")" r2guser
-
 nohup /usr/bin/supervisord --configuration /etc/supervisord.conf > /var/log/supervisor/supervisord."$(date +%m%d%Y-%H%M%S)".log 2>&1 &
 
 SUPERVISOR_PID=$!
@@ -34,6 +28,7 @@ echo "##########################################################################
 #trap shutdown SIGTERM SIGINT
 #wait ${SUPERVISOR_PID}
 
-gosu r2guser /bin/bash
+/opt/miniconda3/bin/r2g "$@"
+#/bin/bash
 
 #exec /usr/local/bin/gosu r2guser /opt/miniconda3/bin/r2g "$@"

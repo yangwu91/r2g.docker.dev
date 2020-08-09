@@ -18,8 +18,6 @@ ENV PATH="/opt/miniconda3/bin:/opt/bin:$PATH"
 #ENV LANG=${LANGUAGE}
 #ENV TZ="America/New_York"
 
-
-
 EXPOSE 4444
 
 ADD configs.tar.gz /tmp/
@@ -118,22 +116,18 @@ RUN \
     #======================
     mkdir -p /workspace && \
     chown -R r2guser /workspace && \
-    chmod 777 /workspace
+    chmod 777 /workspace && \
 
-USER 1000
-RUN \
     #======================
     # r2g
     #======================
     # pip install r2g && \
-    bash /opt/bin/generate_r2g_pathjson.sh > ${HOME}/.path.json && \
     cd /opt && \
     git clone https://github.com/yangwu91/r2g.alpha.git && \
     cd r2g.alpha && \
     pip install .[test] && \
+    bash /opt/bin/generate_r2g_pathjson.sh > /opt/miniconda3/lib/python3.8/site-packages/r2g/path.json && \
     cd /workspace
-
-USER root
 
 #============================
 # Some configuration options
