@@ -27,8 +27,9 @@ echo "##########################################################################
 
 #trap shutdown SIGTERM SIGINT
 #wait ${SUPERVISOR_PID}
+printf '/LIBS/GUID = "%s"\n' `uuidgen` > ${HOME}/.ncbi/user-settings.mkfg
 
-/opt/miniconda3/bin/r2g "$@"
-#/bin/bash
+#/opt/miniconda3/bin/r2g "$@"
+/bin/bash
 
 #exec /usr/local/bin/gosu r2guser /opt/miniconda3/bin/r2g "$@"
