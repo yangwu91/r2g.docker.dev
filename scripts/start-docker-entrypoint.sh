@@ -29,7 +29,9 @@ echo "##########################################################################
 #wait ${SUPERVISOR_PID}
 #printf '/LIBS/GUID = "%s"\n' `uuidgen` > ${HOME}/.ncbi/user-settings.mkfg
 
-#/opt/miniconda3/bin/r2g "$@"
-/bin/bash
-
-#exec /usr/local/bin/gosu r2guser /opt/miniconda3/bin/r2g "$@"
+if [ "$1" == "debug" ]; then
+    /bin/bash
+else
+    /opt/miniconda3/bin/r2g "$@"
+fi
+/opt/miniconda3/bin/r2g "$@"
