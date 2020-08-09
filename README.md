@@ -3,28 +3,28 @@
 
 ![docker](https://img.shields.io/docker/cloud/build/yangwu91/r2g.docker.test?logo=docker&style=plastic) ![License](https://img.shields.io/github/license/yangwu91/r2g.alpha?logo=open-source-initiative&style=plastic)
 
-<div align=center><img src="https://raw.githubusercontent.com/yangwu91/r2g.alpha/master/docs/icon.png" alt="icon"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/yangwu91/r2g/master/images/banner.png" alt="banner"/></div>
 
-### 
+## Introduction
 
-**R2g**, short for **reads to genes**, is a Python-based light-weight pipeline to find and assemble target homologous genes in species with poor genome assemblies or even without genome assemblies. Average personal computers without high-end specs nor tons of sequencing data stored can run it adequately. 
+**Reads to genes**, or **r2g**, is a computationally lightweight and homology-based pipeline that allows rapid identification of genes or gene families from raw sequence databases in the absence of an assembly, by taking advantage of  over 10,000 terabases of sequencing data for all kinds of species deposited in  [Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra) hosted by [National Center for Biotechnology Information](https://www.ncbi.nlm.nih.gov/), which can be effectively run on **most common computers without high-end specs**.
 
 You can find source code of the r2g project [here](https://github.com/yangwu91/r2g).
 
-This docker integrates required third-party applications and the r2g itself, which is easy and ready to go.
+This docker integrates required third-party applications and the r2g itself, which is ready to go.
 
 ## Running the images
 ### Print detailed usages
 ```bash
-docker run -it --dns 8.8.8.8 -v /dev/shm:/dev/shm -v /dir/to/your/folder:/opt/data yangwu91/r2g:latest --help
+docker run -it -v /dev/shm:/dev/shm -v /dir/to/your/folder:/workspace -u $UID yangwu91/r2g:latest --help
 ```
 To avoid the applications crashing inside a docker container, the option `-v /dev/shm:/dev/shm` is recommended to be used, or tune the value `--shm-size=8g` in your specific cases.
 
-In the command, the option `-v /dir/to/your/folder:/opt/data` will mount your folder `/dir/to/your/folder` onto the docker.
+In the command, the option `-v /dir/to/your/folder:/workspace` will mount your folder `/dir/to/your/folder` onto the Docker.
 
 ### An example command
 
 ```
-docker run -it --shm-size=8g --dns 8.8.8.8 -v /dir/to/your/folder:/opt/data yangwu91/r2g:latest -o /opt/data/OUTPUT -s SRXNNNNNN -q /dir/to/your/folder/QUERY.fasta --cut 80,50 -p blastn
+docker run -it -v /dev/shm:/dev/shm -v /dir/to/your/folder:/workspace yangwu91/r2g:latest -o OUTPUT -s SRXNNNNNN -q QUERY.fasta --cut 80,50 -p blastn
 ```
-Finally, you can find the results in the folder `/dir/to/your/folder/OUTPUT`.
+After that, you can find the results in the folder `/dir/to/your/folder/OUTPUT/`.
