@@ -94,17 +94,17 @@ RUN \
     conda config --add channels bioconda && \
     conda config --add channels conda-forge && \
     # Trinity, sratoolkit and other dependencies:
-    conda install -y python=$PY_VER trinity=$TRINITY_VER sra-tools=$SRA_VER numpy && \
+    conda install -y python=$PY_VER trinity=$TRINITY_VER sra-tools=$SRA_VER numpy samtools=1.10 && \
     chown -R r2guser /opt/* && \
 
-	#=====================
+    #=====================
     # configure sra-tools>2.10
     #=====================
-	mkdir /opt/ncbi && \
-	chmod 777 /opt/ncbi && \
-	mkdir -p /.ncbi && \
-	chmod 777 /.ncbi && \
-	mkdir -p /root/.ncbi && \
+    mkdir /opt/ncbi && \
+    chmod 777 /opt/ncbi && \
+    mkdir -p /.ncbi && \
+    chmod 777 /.ncbi && \
+    mkdir -p /root/.ncbi && \
     bash /opt/bin/generate_sratools_config.sh > /.ncbi/user-settings.mkfg && \
     bash /opt/bin/generate_sratools_config.sh > /root/.ncbi/user-settings.mkfg && \
 
