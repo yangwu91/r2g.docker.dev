@@ -34,4 +34,6 @@ if [ "$1" == "debug" ]; then
 else
     /opt/miniconda3/bin/r2g "$@"
 fi
-/opt/miniconda3/bin/r2g "$@"
+
+exit;
+

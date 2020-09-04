@@ -1,7 +1,7 @@
 
 # R2g Docker
 
-![docker](https://img.shields.io/docker/cloud/build/yangwu91/r2g.docker.test?logo=docker&style=plastic) ![License](https://img.shields.io/github/license/yangwu91/r2g.alpha?logo=open-source-initiative&style=plastic)
+![docker](https://img.shields.io/docker/cloud/build/yangwu91/r2g?logo=docker&style=plastic) ![License](https://img.shields.io/github/license/yangwu91/r2g?logo=open-source-initiative&style=plastic)
 
 <div align=center><img src="https://raw.githubusercontent.com/yangwu91/r2g/master/images/banner.png" alt="banner"/></div>
 
@@ -21,6 +21,14 @@ docker run -it -v /dev/shm:/dev/shm -v /dir/to/your/folder:/workspace -u $UID ya
 To avoid the applications crashing inside a docker container, the option `-v /dev/shm:/dev/shm` is recommended to be used, or tune the value `--shm-size=8g` in your specific cases.
 
 In the command, the option `-v /dir/to/your/folder:/workspace` will mount your folder `/dir/to/your/folder` onto the Docker.
+
+### Debug mode
+
+Enter an interactive shell to debug:
+
+```bash
+docker run -it yangwu91/r2g:latest debug
+```
 
 ### An example command
 

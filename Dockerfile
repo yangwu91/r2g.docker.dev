@@ -134,7 +134,7 @@ RUN \
     #======================
     # pip install r2g && \
     cd /opt && \
-    git clone https://github.com/yangwu91/r2g.alpha.git && \
+    git clone https://github.com/yangwu91/r2g.dev.git && \
     cd r2g.alpha && \
     pip install .[test] && \
     bash /opt/bin/generate_r2g_pathjson.sh > /opt/miniconda3/lib/python3.8/site-packages/r2g/path.json && \
